@@ -9,7 +9,13 @@ PACKAGE_ROOT = Path(__file__).resolve().parent
 if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
-from controllers import health_router, predict_router, systemone_router
+from controllers import (
+    health_router,
+    predict_router,
+    systemone_router,
+    ticket_router,
+    loader_router,
+)
 
 app = FastAPI(
     title="Laya Decision & Routing Server",
@@ -21,6 +27,8 @@ app = FastAPI(
 app.include_router(health_router)
 app.include_router(predict_router)
 app.include_router(systemone_router)
+app.include_router(ticket_router)
+app.include_router(loader_router)
 
 
 @app.get("/")
@@ -34,6 +42,13 @@ def root():
             "predict": "POST /predict",
             "predict_ticket": "POST /predict/ticket",
             "systemone": "POST /v1/systemone",
+            "ticket_triage": "POST /ticket/triage",
+            "ticket_batch": "POST /ticket/batch-triage",
+            "ticket_urgency": "POST /ticket/urgency",
+            "models_status": "GET /models",
+            "models_load": "POST /models/load",
+            "models_unload": "POST /models/unload",
+            "models_presets": "GET & POST /models/presets",
         },
     }
 
